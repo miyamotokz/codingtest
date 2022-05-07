@@ -1,8 +1,7 @@
-import React, { useRef } from 'react';
-import ReactDOM from 'react-dom';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
-
+import React, { useRef } from 'react'
+import ReactDOM from 'react-dom'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 
 // const options: Highcharts.Options = {
 //     title: {
@@ -26,8 +25,6 @@ import HighchartsReact from 'highcharts-react-official';
 //         : series,
 //   };
 
-const Graph = (props: HighchartsReact.Props) => {
+const Graph = (props: HighchartsReact.Props) => {}
 
-};
-
-export default Graph;
+export default Graph
