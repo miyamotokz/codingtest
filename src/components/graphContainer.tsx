@@ -9,11 +9,11 @@ type Props = {
     checkedList:number[]
 }
 const GraphContainer = (props:Props) => {
-
     const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+    console.log("con", props.checkedList)
+    
 
     const populations = [...Array(47)].map((_, i) => {
-        console.log(i,"dasdas")
         const data = FetchPopulation(i+1)
         if(data)return data
     })

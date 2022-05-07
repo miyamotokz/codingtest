@@ -5,25 +5,39 @@ import TodohukenCheckBox from './components/todohukenCheckBox';
 import { FetchPopulation, FetchPopulationList } from './lib/fetch';
 
 function App() {
-    const [checked, setChecked] = useState<number[]>([])
-
+  const [checked, setChecked] = useState<number[]>([])
+  let checkedList = checked
+  const onCheck = (e:number) => {
+    const addOrRemove = () => {
+            if (checked.indexOf(e) !== -1) {
+              console.log("dadasdaf")
+              checked.splice(checked.indexOf(e), 1)
+              return [...checked]
+            } else {
+              return [...checked, e]
+            }
+          }
+          checkedList = addOrRemove()
+          console.log(checkedList)
+          setChecked(checkedList)
+    }
+    console.log("ere",checkedList)
     return (
     <>
     <TodohukenCheckBox
-      checked={checked}
-      onCheck={
-      (e) => {
-      setChecked([...checked,e])
-    }
-    }
+          checked={checked}
+          onCheck={(e) => {
+            onCheck(e)
+          }
+          }
     >
 
     </TodohukenCheckBox>
     <GraphContainer
-    checkedList={checked}
+          checkedList={checkedList}
     ></GraphContainer>
     </>
     )
-    }
+        }
 
 export default App;
