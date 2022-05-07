@@ -2,7 +2,6 @@ import '../App.css'
 import React, { useRef } from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-
 import { FetchPopulation, FetchTodohukenList } from '../lib/fetch'
 
 type Props = {
@@ -10,8 +9,6 @@ type Props = {
 }
 const GraphContainer = (props: Props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null)
-  console.log('con', props.checkedList)
-
   const populations = [...Array(47)].map((_, i) => {
     const data = FetchPopulation(i + 1)
     if (data) return data
@@ -31,10 +28,10 @@ const GraphContainer = (props: Props) => {
       categories.push(area.year)
     })
     const dataList = populationDataList[todohuken].map((area: any) => area.value)
-
+    const name = todohukenList[todohuken].prefName
     series.push({
       type: 'line',
-      name: todohukenList[todohuken].prefName,
+      name: name,
       data: dataList,
       marker: {
         enabled: true,
@@ -57,9 +54,7 @@ const GraphContainer = (props: Props) => {
     caption: {
       text: '選択した各県の総人口のグラフ',
     },
-    accessibility: {
-      description: '選択した各県の総人口のグラフ',
-    },
+
     xAxis: {
       title: {
         text: '年度',
@@ -80,6 +75,7 @@ const GraphContainer = (props: Props) => {
       verticalAlign: 'middle',
     },
   }
+
   return <HighchartsReact highcharts={Highcharts} options={options} ref={chartComponentRef} {...props} />
 }
 export default GraphContainer

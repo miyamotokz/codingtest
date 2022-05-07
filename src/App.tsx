@@ -17,8 +17,6 @@ function App() {
     }
 
     const newChecked = newCheckedCreate()
-
-    console.log(newChecked)
     setChecked(newChecked)
   }
   return (
