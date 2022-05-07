@@ -1,6 +1,6 @@
-import useSWR from 'swr'
 import axios from 'axios'
 import useSWRImmutable from 'swr/immutable'
+
 const fetcher = (url: string) => axios.get(url, { headers: { 'X-API-KEY': '5ey9gBAJ5RdrLMhg7uoUjlpn9A0pMevWph8CCkw7' } }).then((res) => res.data)
 
 export const FetchTodohukenList = () => {

@@ -19,6 +19,7 @@ function App() {
     const newChecked = newCheckedCreate()
     setChecked(newChecked)
   }
+
   return (
     <>
       <TodohukenCheckBoxContainer
@@ -27,8 +28,8 @@ function App() {
           toggleCheck(e)
         }}
         children={[]}
-      ></TodohukenCheckBoxContainer>
-      <GraphContainer checkedList={checked}></GraphContainer>
+      />
+      <GraphContainer checkedList={checked} />
     </>
   )
 }
