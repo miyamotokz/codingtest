@@ -8,6 +8,11 @@ const fetcher = (url: string) =>
 
 export const FetchTodohukenList = () => {
     return useSWR(`https://opendata.resas-portal.go.jp/api/v1/prefectures`, fetcher)
+}
 
-   
+export const FetchPopulation = (codes:number[]) => {
+    codes.map((code) => {
+        const { data, error } = useSWR(`https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?prefCode=${code}&cityCode=-`, fetcher)
+        console.log(data)
+    })
 }
