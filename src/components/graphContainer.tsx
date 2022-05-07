@@ -2,23 +2,29 @@ import React, { useRef } from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { FetchPopulation, FetchTodohukenList } from '../lib/fetch'
-
+type Todohuken = {
+  prefCode: number
+  prefName: string
+}
 type Props = {
   checkedList: number[]
 }
-const GraphContainer = (props: Props) => {
+const GraphContainer: React.FC<Props> = (props) => {
   const chartComponentRef = useRef<HighchartsReact.RefObject>(null)
 
   const populations = [...Array(47)].map((_, i) => {
-    const data = FetchPopulation(i + 1)
-    if (data) return data
+    const { data, error } = FetchPopulation(i + 1)
+    if (data) return data.result
+  })
+  if (populations.length !== 47) return <>Loading...</>
+  const populationDataList = populations.map((data) => {
+    if (data) return data.data[0].data
   })
 
-  const populationDataList = populations.map((data) => {
-    return data?.result.data[0].data
-  })
-  const data = FetchTodohukenList()
-  const todohukenList = data?.result
+  const { data, error } = FetchTodohukenList()
+  if (!data) return <>Loading</>
+
+  const todohukenList = data.result
 
   let categories: any[] = []
   let series: Highcharts.SeriesOptionsType[] = []
@@ -77,6 +83,10 @@ const GraphContainer = (props: Props) => {
     series: series.length === 0 ? [{ type: 'line', name: '都道府県名', data: [] }] : series,
   }
 
-  return <HighchartsReact highcharts={Highcharts} options={options} ref={chartComponentRef} {...props} />
+  return (
+    <>
+      <HighchartsReact highcharts={Highcharts} options={options} ref={chartComponentRef} {...props} />
+    </>
+  )
 }
 export default GraphContainer

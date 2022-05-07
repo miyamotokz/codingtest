@@ -27,7 +27,6 @@ function App() {
         onCheck={(e) => {
           toggleCheck(e)
         }}
-        children={[]}
       />
       <GraphContainer checkedList={checked} />
     </>
