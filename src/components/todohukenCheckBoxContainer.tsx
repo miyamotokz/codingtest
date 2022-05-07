@@ -12,15 +12,14 @@ type Todohuken = {
   prefName: string
 }
 
-const TodohukenCheckBox = (props: Props) => {
+const TodohukenCheckBoxContainer = (props: Props) => {
   const data = FetchTodohukenList()
 
   return (
-    <>
-      <div id="checkboxtitle">都道府県</div>
+    <section className="checkboxContanier">
+      <h2 className="checkboxArea">都道府県</h2>
       <div>
         <form>
-          {' '}
           {data?.result.map((e: Todohuken, i: number) => {
             const name: string = 'todohuken' + e.prefCode
             return (
@@ -32,8 +31,8 @@ const TodohukenCheckBox = (props: Props) => {
           })}
         </form>
       </div>
-    </>
+    </section>
   )
 }
 
-export default TodohukenCheckBox
+export default TodohukenCheckBoxContainer

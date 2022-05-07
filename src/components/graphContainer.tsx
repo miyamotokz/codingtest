@@ -44,22 +44,21 @@ const GraphContainer = (props: Props) => {
     })
   })
 
-  const themeCustom = {
-    colors: ['#66BB6A', '#ef5350'],
-    chart: {
-      style: {
-        fontFamily: "'Roboto', sans-serif",
-        paddingTop: '5px',
-      },
+  Highcharts.setOptions({
+    lang: {
+      thousandsSep: '',
+      numericSymbols: [],
     },
-  }
-  Highcharts.setOptions(themeCustom)
+  })
   const options: Highcharts.Options = {
-    // lang: {
-    // numericSymbols: null
-    // }
     title: {
-      text: '',
+      text: '人口統計',
+    },
+    caption: {
+      text: '選択した各県の総人口のグラフ',
+    },
+    accessibility: {
+      description: '選択した各県の総人口のグラフ',
     },
     xAxis: {
       title: {
@@ -72,6 +71,7 @@ const GraphContainer = (props: Props) => {
         text: '人口数',
       },
     },
+
     series: series.length === 0 ? [{ type: 'line', name: '都道府県名', data: [] }] : series,
 
     legend: {
