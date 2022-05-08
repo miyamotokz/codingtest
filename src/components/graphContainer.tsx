@@ -9,34 +9,38 @@ type Todohuken = {
 type Props = {
   checkedList: number[]
 }
-const GraphContainer: React.FC<Props> = (props) => {
-  const chartComponentRef = useRef<HighchartsReact.RefObject>(null)
-
+// グラフデータ（options）作成　optionsを返す
+const makeOptions = (checkedList: number[]) => {
+  //都道府県別の人口データ取得
   const populations = [...Array(47)].map((_, i) => {
     const { data, error } = FetchPopulation(i + 1)
     if (data) return data.result
   })
-  if (populations.length !== 47) return <>Loading...</>
+  if (populations.length !== 47) return 0 //47都道府県全部Fetchが終わるまでは0
+
+  //result:{data:{0:{label:"総人口".data:{0:{year,value}}}}}からyearとvalueだけ取り出す
   const populationDataList = populations.map((data) => {
     if (data) return data.data[0].data
   })
 
+  //都道府県名取得
   const { data, error } = FetchTodohukenList()
-  if (!data) return <>Loading</>
+  if (!data) return 0 //取得終わるまでは0
+  const todohukenList: Todohuken[] = data.result
 
-  const todohukenList = data.result
-
+  // リターン用データ
   let categories: any[] = []
   let series: Highcharts.SeriesOptionsType[] = []
 
-  props.checkedList.map((todohuken, i) => {
+  //チェックされた都道府県のデータだけ設定
+  checkedList.map((todohuken: number, i: number) => {
+    console.log('www', todohuken)
     todohuken--
     populationDataList[todohuken].map((area: any) => {
       categories.push(area.year)
     })
     const dataList = populationDataList[todohuken].map((area: any) => area.value)
     const name = todohukenList[todohuken].prefName
-
     series.push({
       type: 'line',
       name: name,
@@ -48,14 +52,7 @@ const GraphContainer: React.FC<Props> = (props) => {
       },
     })
   })
-
-  Highcharts.setOptions({
-    lang: {
-      thousandsSep: '',
-      numericSymbols: [],
-    },
-  })
-
+  //リターン用
   const options: Highcharts.Options = {
     title: {
       text: '人口統計',
@@ -63,7 +60,6 @@ const GraphContainer: React.FC<Props> = (props) => {
     caption: {
       text: '選択した各県の総人口のグラフ',
     },
-
     xAxis: {
       title: {
         text: '年度',
@@ -82,7 +78,20 @@ const GraphContainer: React.FC<Props> = (props) => {
     },
     series: series.length === 0 ? [{ type: 'line', name: '都道府県名', data: [] }] : series,
   }
+  return options
+}
 
+const GraphContainer: React.FC<Props> = (props) => {
+  const chartComponentRef = useRef<HighchartsReact.RefObject>(null)
+  Highcharts.setOptions({
+    lang: {
+      thousandsSep: '',
+      numericSymbols: [],
+    },
+  })
+  // Fetchと処理前は内容変わるのでlet
+  let options = makeOptions(props.checkedList)
+  if (!options) return <>Loading</> //データ整形前はLoadingを返す
   return (
     <>
       <HighchartsReact highcharts={Highcharts} options={options} ref={chartComponentRef} {...props} />
