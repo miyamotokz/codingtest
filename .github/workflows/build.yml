@@ -45,8 +45,7 @@ jobs:
     # gh-pagesを使って公開
     - name: deploy
       uses: peaceiris/actions-gh-pages@v3
-      env:
-        PUBLISH_BRANCH: gh-pages
-        
       with:
-          publish_dir: ./public
+        deploy_key: ${{ secrets.deploykey }}
+        PUBLISH_BRANCH: gh-pages
+        publish_dir: ./public
