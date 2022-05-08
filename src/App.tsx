@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './App.css'
 import GraphContainer from './components/graphContainer'
 import TodohukenCheckBoxContainer from './components/todohukenCheckBoxContainer'
-
+import PageHeader from './components/pageHeader'
 function App() {
   const [checked, setChecked] = useState<number[]>([])
 
@@ -22,6 +22,7 @@ function App() {
 
   return (
     <>
+      <PageHeader />
       <TodohukenCheckBoxContainer
         onCheck={(e) => {
           toggleCheck(e)
