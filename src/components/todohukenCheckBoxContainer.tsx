@@ -1,6 +1,7 @@
 import React from 'react'
 import '../App.css'
 import { FetchTodohukenList } from '../lib/fetch'
+import TdohukenCheckBox from './todohukenCheckBox'
 
 type Todohuken = {
   prefCode: number
@@ -11,7 +12,7 @@ type Props = {
   onCheck: (arg0: any) => void
 }
 
-const TodohukenCheckBoxContainer: React.FC<Props> = (props) => {
+const TodohukenCheckBoxContainer: React.FC<Props> = ({ checked, onCheck }) => {
   const { data, error } = FetchTodohukenList()
   if (!data) return <>Loading</>
   const todohuken = data.result
@@ -21,13 +22,7 @@ const TodohukenCheckBoxContainer: React.FC<Props> = (props) => {
       <div>
         <form>
           {todohuken.map((e: Todohuken, i: number) => {
-            const name: string = 'todohuken' + e.prefCode
-            return (
-              <span key={i}>
-                <input type="checkbox" value={e.prefCode} id={name} onChange={() => props.onCheck(e.prefCode)}></input>
-                <label htmlFor={name}>{e.prefName}</label>
-              </span>
-            )
+            return <TdohukenCheckBox onCheckTodohuken={onCheck} e={e} key={e.prefName} />
           })}
         </form>
       </div>
