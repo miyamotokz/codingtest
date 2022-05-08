@@ -8,8 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-20.04
-    env:
-      REACT_APP_RESAS_API_KEY: ${{ secrets.REACT_APP_RESAS_API_KEY }}
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
@@ -35,6 +33,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
+          REACT_APP_RESAS_API_KEY: ${{ secrets.REACT_APP_RESAS_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           publish_dir: ./public
