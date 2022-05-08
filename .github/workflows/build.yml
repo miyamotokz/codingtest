@@ -36,8 +36,6 @@ jobs:
 
     # パッケージのインストールとアプリのビルド
     - name: install and build
-      env:
-        REACT_APP_RESAS_API_KEY: ${{ secrets.REACT_APP_RESAS_API_KEY }}
       run: |
         npm ci
         npm run build
@@ -49,6 +47,7 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       env:
         PUBLISH_BRANCH: gh-pages
+        REACT_APP_RESAS_API_KEY: ${{ secrets.REACT_APP_RESAS_API_KEY }}
       with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
