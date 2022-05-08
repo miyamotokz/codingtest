@@ -1,0 +1,69 @@
+.pageHeader{
+  display:flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #c4c4c4;
+  width:100%;
+  height:45px;
+
+}
+.pageHeader h1{
+  display:inline-block;
+  font-weight: normal;
+  font-size:25px;
+  
+}
+
+.checkbox-title {
+  font-size: small;
+  font-weight: normal;
+}
+.checkboxContanier{
+  margin:0 10px
+}
+.checkbox-area{
+  margin:0 15px
+}
+.checkbox-part{
+  width:130px;
+  display:inline-block;
+}
+.checkbox-part label{
+  font-size:20px;
+}
+
+/* チェックボックスのスタイル */
+.checkbox-part input[type=checkbox] {
+  display: none;
+}
+.todohuken-checkbox-label {
+  position: relative; 
+  padding: 0 0 0 30px; /* チェックボックス左端から文字の先頭までの距離 */
+}
+.todohuken-checkbox-label:hover:after {
+  border-color: #000; /* ホバー時のチェックボックスの色 */
+}
+.todohuken-checkbox-label:after, .todohuken-checkbox-label:before{
+  position: absolute; 
+  content: ""; 
+  display: block;
+  top: 0%;
+}
+.todohuken-checkbox-label:after {
+  width: 20px; /* ボックスの横幅を指定する */
+  height: 20px; /* ボックスの高さを指定する */
+  border: 1.5px solid #000; /* ボックスの境界線を実線で指定する */
+}
+/* チェックマーク _|　を作って45度回転*/
+.todohuken-checkbox-label:before {
+  left: 10px;
+  width: 3px; /* _ の長さ */
+  height: 15px; /* ｜　の長さ */
+  border-bottom: 3px solid #000; /* _ の線 */
+  border-right: 3px solid #000; /* ｜の線 */
+  transform: rotate(45deg);
+  opacity: 0; /* 未チェックの場合は透明 */
+}
+.todohuken-checkbox:checked + .todohuken-checkbox-label:before {
+  opacity: 1; /* チェック済みの場合に見える */
+}

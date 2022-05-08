@@ -17,8 +17,8 @@ const TodohukenCheckBoxContainer: React.FC<Props> = ({ onCheck }) => {
   const todohuken = data.result
   return (
     <section className="checkboxContanier">
-      <h2 className="checkboxArea">都道府県</h2>
-      <div>
+      <h2 className="checkbox-title">都道府県</h2>
+      <div className="checkbox-area">
         <form>
           {todohuken.map((e: Todohuken, i: number) => {
             return <TdohukenCheckBox onCheckTodohuken={onCheck} e={e} key={e.prefName} />

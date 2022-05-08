@@ -12,10 +12,12 @@ type Props = {
 const TodohukenCheckBox: React.FC<Props> = ({ e, onCheckTodohuken }) => {
   const name: string = 'todohuken' + e.prefCode
   return (
-    <span>
-      <input type="checkbox" value={e.prefCode} id={name} onChange={() => onCheckTodohuken(e.prefCode)}></input>
-      <label htmlFor={name}>{e.prefName}</label>
-    </span>
+    <div className="checkbox-part">
+      <input type="checkbox" value={e.prefCode} id={name} onChange={() => onCheckTodohuken(e.prefCode)} className="todohuken-checkbox"></input>
+      <label htmlFor={name} className="todohuken-checkbox-label">
+        {e.prefName}
+      </label>
+    </div>
   )
 }
 
