@@ -8,11 +8,10 @@ type Todohuken = {
   prefName: string
 }
 type Props = {
-  checked: number[]
   onCheck: (arg0: any) => void
 }
 
-const TodohukenCheckBoxContainer: React.FC<Props> = ({ checked, onCheck }) => {
+const TodohukenCheckBoxContainer: React.FC<Props> = ({ onCheck }) => {
   const { data, error } = FetchTodohukenList()
   if (!data) return <>Loading</>
   const todohuken = data.result

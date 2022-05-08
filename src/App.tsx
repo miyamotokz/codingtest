@@ -23,7 +23,6 @@ function App() {
   return (
     <>
       <TodohukenCheckBoxContainer
-        checked={checked}
         onCheck={(e) => {
           toggleCheck(e)
         }}

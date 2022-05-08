@@ -1,7 +1,9 @@
 import React, { useRef } from 'react'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
+import '../App.css'
 import { makeGraphOptions } from '../lib/makeGraphOptions'
+
 type Todohuken = {
   prefCode: number
   prefName: string
