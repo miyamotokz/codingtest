@@ -1,51 +1,40 @@
-# ワークフローの名前
-name: Release GitHub Page
+name: GitHub Pages
 
-# 起動のタイミング
-# 今回はmasterブランチへのpush
 on:
   push:
     branches:
-      - master
+      - main
+  pull_request:
 
-# ジョブの定義
 jobs:
-  build:
-    # 実行するインスタンス
-    runs-on: ubuntu-latest
-    env:
-      REACT_APP_RESAS_API_KEY: ${{ secrets.REACT_APP_RESAS_API_KEY }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-    # nodeのバージョン一覧
-    strategy:
-      matrix:
-        node-version: ['16.x']
-
-    # 各ステップの実行
-    steps:
-
-    # チェックアウト
-    - uses: actions/checkout@v2
-
-    # 使用するnodeのバージョンを指定
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: npm
-    # パッケージのインストールとアプリのビルド
-    - name: install and build
-      run: |
-        npm ci
-        npm run build
+  deploy:
+    runs-on: ubuntu-20.04
       env:
-        CI: true
+        REACT_APP_RESAS_API_KEY: ${{ secrets.REACT_APP_RESAS_API_KEY }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v3
 
-    # gh-pagesを使って公開
-    - name: deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        deploy_key: ${{ secrets.deploykey }}
-        PUBLISH_BRANCH: gh-pages
-        publish_dir: ./public
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
